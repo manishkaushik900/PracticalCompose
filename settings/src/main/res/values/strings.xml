@@ -18,4 +18,19 @@
     <string name="cd_hint_disabled">Hints Disabled</string>
     <string name="setting_enable_hint">Show Hints</string>
 
+    <string name="setting_manage_subscription">Manage Subscription</string>
+    <string name="cd_open_subscription">Open Subscription Management</string>
+
+    <string name="setting_option_marketing">Receive marketing emails?</string>
+    <string-array name="setting_options_marketing_choice">
+        <item>Opt-in for marketing emails</item>
+        <item>Don\'t send me emails</item>
+    </string-array>
+
+    <string name="setting_option_theme">Theme</string>
+    <string name="cd_select_theme">Select theme</string>
+
+    <string name="setting_app_version_title">App Version</string>
+    <string name="setting_app_version">v1.1</string>
+
 </resources>

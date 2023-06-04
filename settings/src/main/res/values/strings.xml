@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">settings</string>
+
+    <string name="theme_light">Light</string>
+    <string name="theme_dark">Dark</string>
+    <string name="theme_system">System</string>
+
+    <string name="cd_go_back">Go back to previous screen</string>
+
+    <string name="title_settings">Settings</string>
+
+    <string name="cd_notifications_enabled">Notifications Enabled</string>
+    <string name="cd_notifications_disabled">Notifications Disabled</string>
+    <string name="setting_enable_notifications">Enable Notifications</string>
+
+
+    <string name="cd_hint_enabled">Hints Enabled</string>
+    <string name="cd_hint_disabled">Hints Disabled</string>
+    <string name="setting_enable_hint">Show Hints</string>
+
+</resources>

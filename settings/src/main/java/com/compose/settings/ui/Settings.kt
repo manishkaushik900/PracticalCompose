@@ -40,6 +40,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringArrayResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
@@ -52,6 +53,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.compose.settings.R
+import com.compose.settings.ui.Tags.TAG_CHECK_ITEM
+import com.compose.settings.ui.Tags.TAG_MARKETING_OPTION
+import com.compose.settings.ui.Tags.TAG_TOGGLE_ITEM
 
 @Composable
 fun Settings() {
@@ -178,9 +182,10 @@ fun ThemeSettingItem(
                 modifier = Modifier.weight(1f),
                 text = stringResource(id = R.string.setting_option_theme)
             )
-            Text(text = stringResource(id = selectedTheme.label))
+            Text(text = stringResource(id = selectedTheme.label), modifier= Modifier.testTag(Tags.TAG_THEME_OPTION))
         }
         DropdownMenu(
+            modifier= Modifier.testTag(Tags.TAG_THEME_DROPDOWN),
             expanded = expanded,
             onDismissRequest = { expanded = false },
             offset = DpOffset(16.dp, 0.dp)
@@ -218,6 +223,7 @@ fun MarketingSettingItem(
             options.forEachIndexed { index, option ->
                 Row(
                     modifier = Modifier
+                        .testTag(TAG_MARKETING_OPTION + index)
                         .selectable(
                             selected = selectedOption.id == index,
                             onClick = {
@@ -331,6 +337,7 @@ fun NotificationSetting(
 
     SettingItem(modifier = modifier) {
         Row(modifier = Modifier
+            .testTag(TAG_TOGGLE_ITEM)
             .toggleable(
                 value = checked, onValueChange = onCheckedChanged, role = Role.Switch
             )
@@ -344,7 +351,7 @@ fun NotificationSetting(
 
 @Composable
 fun HintSettingItem(
-    modifier: Modifier,
+    modifier: Modifier = Modifier,
     title: String,
     checked: Boolean,
     onCheckedChanged: (checked: Boolean) -> Unit
@@ -356,6 +363,7 @@ fun HintSettingItem(
     SettingItem(modifier = modifier) {
 
         Row(modifier = Modifier
+            .testTag(TAG_CHECK_ITEM)
             .toggleable(
                 value = checked, onValueChange = onCheckedChanged, role = Role.Checkbox
             )

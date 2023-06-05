@@ -55,6 +55,9 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.compose.settings.R
 import com.compose.settings.ui.Tags.TAG_CHECK_ITEM
 import com.compose.settings.ui.Tags.TAG_MARKETING_OPTION
+import com.compose.settings.ui.Tags.TAG_SELECT_THEME
+import com.compose.settings.ui.Tags.TAG_THEME_DROPDOWN_OPTION
+import com.compose.settings.ui.Tags.TAG_THEME_OPTION
 import com.compose.settings.ui.Tags.TAG_TOGGLE_ITEM
 
 @Composable
@@ -63,7 +66,6 @@ fun Settings() {
 
     MaterialTheme {
         val state = viewModel.uiState.collectAsState().value
-
         Column {
             TopAppBar()
             NotificationSetting(
@@ -85,7 +87,6 @@ fun Settings() {
             ManageSubscriptionItem(modifier = Modifier.fillMaxWidth(),
                 title = stringResource(id = R.string.setting_manage_subscription),
                 onSettingClicked = {
-
                 })
             Divider()
 
@@ -152,9 +153,13 @@ fun AppVersionSettingItem(
         Row(
             modifier = Modifier
                 .padding(16.dp)
-                .semantics(mergeDescendants = true) { }, verticalAlignment = Alignment.CenterVertically
+                .semantics(mergeDescendants = true) { },
+            verticalAlignment = Alignment.CenterVertically
         ) {
-            Text(text = stringResource(id = R.string.setting_app_version_title), modifier=Modifier.weight(1f))
+            Text(
+                text = stringResource(id = R.string.setting_app_version_title),
+                modifier = Modifier.weight(1f)
+            )
             Text(text = appVersion)
         }
 
@@ -177,15 +182,20 @@ fun ThemeSettingItem(
                     onClickLabel = stringResource(id = R.string.cd_select_theme)
                 )
                 .padding(16.dp)
+                .testTag(TAG_SELECT_THEME)
         ) {
             Text(
                 modifier = Modifier.weight(1f),
                 text = stringResource(id = R.string.setting_option_theme)
             )
-            Text(text = stringResource(id = selectedTheme.label), modifier= Modifier.testTag(Tags.TAG_THEME_OPTION))
+            Text(
+                modifier = Modifier.testTag(Tags.TAG_THEME_OPTION),
+                text = stringResource(id = selectedTheme.label)
+
+            )
         }
         DropdownMenu(
-            modifier= Modifier.testTag(Tags.TAG_THEME_DROPDOWN),
+            modifier = Modifier.testTag(Tags.TAG_THEME_DROPDOWN),
             expanded = expanded,
             onDismissRequest = { expanded = false },
             offset = DpOffset(16.dp, 0.dp)
@@ -196,7 +206,8 @@ fun ThemeSettingItem(
                     onClick = {
                         onOptionSelected(theme)
                         expanded = false
-                    }
+                    },
+                    modifier = Modifier.testTag(TAG_THEME_DROPDOWN_OPTION + theme.label)
                 )
 
             }
@@ -265,7 +276,9 @@ fun ManageSubscriptionItem(
                 onClickLabel = stringResource(
                     id = R.string.cd_open_subscription
                 )
-            ) { onSettingClicked }
+            ) {
+                onSettingClicked()
+            }
             .padding(horizontal = 16.dp),
             verticalAlignment = Alignment.CenterVertically) {
             Text(text = title, modifier = Modifier.weight(1f))
@@ -339,7 +352,9 @@ fun NotificationSetting(
         Row(modifier = Modifier
             .testTag(TAG_TOGGLE_ITEM)
             .toggleable(
-                value = checked, onValueChange = onCheckedChanged, role = Role.Switch
+                value = checked, onValueChange = {
+                    onCheckedChanged(it)
+                }, role = Role.Switch
             )
             .semantics { stateDescription = notificationsEnabledState }
             .padding(horizontal = 16.dp), verticalAlignment = Alignment.CenterVertically) {
@@ -365,7 +380,9 @@ fun HintSettingItem(
         Row(modifier = Modifier
             .testTag(TAG_CHECK_ITEM)
             .toggleable(
-                value = checked, onValueChange = onCheckedChanged, role = Role.Checkbox
+                value = checked, onValueChange = {
+                    onCheckedChanged(it)
+                }, role = Role.Checkbox
             )
             .semantics { stateDescription = hintEnabledState }
             .padding(horizontal = 16.dp),

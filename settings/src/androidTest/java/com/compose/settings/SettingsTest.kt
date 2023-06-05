@@ -14,8 +14,10 @@ import com.compose.settings.ui.Settings
 import com.compose.settings.ui.Tags
 import com.compose.settings.ui.Tags.TAG_CHECK_ITEM
 import com.compose.settings.ui.Tags.TAG_MARKETING_OPTION
+import com.compose.settings.ui.Tags.TAG_THEME_DROPDOWN_OPTION
 import com.compose.settings.ui.Tags.TAG_THEME_OPTION
 import com.compose.settings.ui.Tags.TAG_TOGGLE_ITEM
+import com.compose.settings.ui.Theme
 import org.junit.Rule
 import org.junit.Test
 

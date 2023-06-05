@@ -43,7 +43,7 @@ class ManageSubscriptionSettingItemTest {
         }
 
         composeTestRule.onNodeWithText(title).performClick()
-//        verify(onSettingClicked).invoke()
+        verify(onSettingClicked).invoke()
 
     }
 }

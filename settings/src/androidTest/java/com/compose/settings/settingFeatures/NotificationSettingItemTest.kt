@@ -1,46 +1,44 @@
-package com.compose.settings
+package com.compose.settings.settingFeatures
 
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.assertIsOn
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
-import com.compose.settings.ui.HintSettingItem
-import com.compose.settings.ui.Tags.TAG_CHECK_ITEM
+import com.compose.settings.ui.NotificationSetting
+import com.compose.settings.ui.Tags
 import org.junit.Rule
 import org.junit.Test
 
-class HintsSettingItemTest {
+class NotificationSettingItemTest {
 
     @get:Rule
     val composeTestRule = createComposeRule()
 
     @Test
-    fun Title_Displayed() {
-        val title = "Show Hints"
+    fun Title_Displayed(){
+        val title = "Enable Notification"
         composeTestRule.setContent {
-            HintSettingItem(
-                title = title,
-                checked = true,
-                onCheckedChanged = {}
-            )
+            NotificationSetting(title = title, checked =true , onCheckedChanged ={} )
         }
-        composeTestRule.onNodeWithText(title).assertIsDisplayed()
-    }
 
+        composeTestRule.onNodeWithText(title).assertIsDisplayed()
+
+    }
 
     @Test
     fun Setting_Checked() {
         composeTestRule.setContent {
-            HintSettingItem(
-                title = "Show Hints",
+            NotificationSetting(
+                title = "Enable Notifications",
                 checked = true,
                 onCheckedChanged = { }
             )
         }
-        composeTestRule
-            .onNodeWithTag(TAG_CHECK_ITEM)
-            .assertIsOn()
+
+        composeTestRule.onNodeWithTag(
+            Tags.TAG_TOGGLE_ITEM
+        ).assertIsOn()
     }
 
 }

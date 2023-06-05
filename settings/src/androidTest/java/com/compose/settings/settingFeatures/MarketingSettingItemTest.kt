@@ -1,4 +1,4 @@
-package com.compose.settings
+package com.compose.settings.settingFeatures
 
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.assertIsSelected
@@ -7,6 +7,7 @@ import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.test.platform.app.InstrumentationRegistry
+import com.compose.settings.R
 import com.compose.settings.ui.MarketingOption
 import com.compose.settings.ui.MarketingSettingItem
 import com.compose.settings.ui.Tags

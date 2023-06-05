@@ -1,4 +1,4 @@
-package com.compose.settings
+package com.compose.settings.settingFeatures
 
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule

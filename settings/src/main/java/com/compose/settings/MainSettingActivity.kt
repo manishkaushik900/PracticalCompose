@@ -17,7 +17,7 @@ class MainSettingActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-//            PracticalComposeTheme {
+            PracticalComposeTheme {
 //                // A surface container using the 'background' color from the theme
 //                Surface(
 //                    modifier = Modifier.fillMaxSize(),
@@ -25,8 +25,9 @@ class MainSettingActivity : ComponentActivity() {
 //                ) {
 //                    Greeting("Babu")
 //                }
-//            }
-            Settings()
+
+                Settings()
+            }
         }
     }
 }

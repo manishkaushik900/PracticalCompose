@@ -64,7 +64,7 @@ import com.compose.settings.ui.Tags.TAG_TOGGLE_ITEM
 fun Settings() {
     val viewModel: SettingsViewModel = viewModel()
 
-    MaterialTheme {
+
         val state = viewModel.uiState.collectAsState().value
         Column {
             TopAppBar()
@@ -116,7 +116,7 @@ fun Settings() {
 
         }
 
-    }
+
 }
 
 @Composable

@@ -62,6 +62,7 @@ import com.compose.practical.R
 import com.compose.practical.ui.authentication.Tags.TAG_CONTENT
 import com.compose.practical.ui.authentication.Tags.TAG_ERROR_ALERT
 import com.compose.practical.ui.authentication.Tags.TAG_INPUT_PASSWORD
+import com.compose.practical.ui.authentication.Tags.TAG_PASSWORD_HIDDEN
 import com.compose.practical.ui.authentication.Tags.TAG_PROGRESS
 
 @Preview(showBackground = true)
@@ -98,7 +99,7 @@ fun AuthenticationContent(
 
         if (authenticationState.isLoading) {
             CircularProgressIndicator(
-                modifier= Modifier.testTag(TAG_PROGRESS)
+                modifier = Modifier.testTag(TAG_PROGRESS)
             )
         } else {
 
@@ -418,35 +419,43 @@ fun PasswordInput(
 
     var isPasswordHidden by remember { mutableStateOf(true) }
 
-    TextField(modifier = modifier.testTag(TAG_INPUT_PASSWORD), keyboardOptions = KeyboardOptions(
-        imeAction = ImeAction.Done, keyboardType = KeyboardType.Password
-    ), keyboardActions = KeyboardActions(onDone = {
-        onDoneClicked()
-    }), value = password ?: "", onValueChange = {
-        onPasswordChange(it)
-    }, label = { Text(text = stringResource(id = R.string.label_password)) }, leadingIcon = {
-        Icon(
-            imageVector = Icons.Default.Lock, contentDescription = null
-        )
-    }, trailingIcon = {
+    TextField(
+        modifier = modifier.testTag(TAG_INPUT_PASSWORD),
+        keyboardOptions = KeyboardOptions(
+            imeAction = ImeAction.Done,
+            keyboardType = KeyboardType.Password
+        ),
+        keyboardActions = KeyboardActions(onDone = {
+            onDoneClicked()
+        }), value = password ?: "", onValueChange = {
+            onPasswordChange(it)
+        }, label = { Text(text = stringResource(id = R.string.label_password)) }, leadingIcon = {
+            Icon(
+                imageVector = Icons.Default.Lock, contentDescription = null
+            )
+        }, trailingIcon = {
 
-        Icon(
-            modifier = Modifier.clickable(
-                onClickLabel = if (isPasswordHidden) {
-                    stringResource(id = R.string.cd_show_password)
+            Icon(
+                modifier = Modifier
+                    .testTag(TAG_PASSWORD_HIDDEN + isPasswordHidden)
+                    .clickable(
+                        onClickLabel = if (isPasswordHidden) {
+                            stringResource(id = R.string.cd_show_password)
+                        } else {
+                            stringResource(id = R.string.cd_hide_password)
+                        }
+                    ) { isPasswordHidden = !isPasswordHidden },
+                imageVector = if (isPasswordHidden) {
+                    Icons.Default.Visibility
                 } else {
-                    stringResource(id = R.string.cd_hide_password)
-                }
-            ) { isPasswordHidden = !isPasswordHidden }, imageVector = if (isPasswordHidden) {
-                Icons.Default.Visibility
-            } else {
-                Icons.Default.VisibilityOff
-            }, contentDescription = null
-        )
+                    Icons.Default.VisibilityOff
+                },
+                contentDescription = null
+            )
 
-    }, singleLine = true, visualTransformation = if (isPasswordHidden) {
-        PasswordVisualTransformation()
-    } else VisualTransformation.None
+        }, singleLine = true, visualTransformation = if (isPasswordHidden) {
+            PasswordVisualTransformation()
+        } else VisualTransformation.None
     )
 
 }

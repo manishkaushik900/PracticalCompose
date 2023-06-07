@@ -42,9 +42,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.clearAndSetSemantics
 import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.stateDescription
 import androidx.compose.ui.semantics.text
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.font.FontWeight
@@ -57,6 +59,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.compose.practical.R
+import com.compose.practical.ui.authentication.Tags.TAG_CONTENT
+import com.compose.practical.ui.authentication.Tags.TAG_ERROR_ALERT
+import com.compose.practical.ui.authentication.Tags.TAG_INPUT_PASSWORD
+import com.compose.practical.ui.authentication.Tags.TAG_PROGRESS
 
 @Preview(showBackground = true)
 @Composable
@@ -91,7 +97,9 @@ fun AuthenticationContent(
     ) {
 
         if (authenticationState.isLoading) {
-            CircularProgressIndicator()
+            CircularProgressIndicator(
+                modifier= Modifier.testTag(TAG_PROGRESS)
+            )
         } else {
 
             AuthenticationForm(
@@ -110,7 +118,7 @@ fun AuthenticationContent(
                 },
                 onAuthenticate = {
                     handleEvent(AuthenticationEvent.Authenticate)
-                                 },
+                },
                 passwordRequirements = authenticationState.passwordRequirements,
                 enabledAuthentication = authenticationState.isFormValid(),
                 onToggleMode = {
@@ -150,7 +158,7 @@ fun AuthenticationForm(
 
 ) {
     Column(
-        modifier = modifier, horizontalAlignment = Alignment.CenterHorizontally
+        modifier = modifier.testTag(TAG_CONTENT), horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
         Spacer(modifier = Modifier.height(32.dp))
@@ -235,7 +243,7 @@ fun AuthenticationErrorDialog(
 ) {
 
     AlertDialog(
-        modifier = modifier,
+        modifier = modifier.testTag(TAG_ERROR_ALERT),
         onDismissRequest = { dismissError() },
         confirmButton = {
             TextButton(
@@ -270,9 +278,21 @@ fun ToggleAuthenticationMode(
     authenticationMode: AuthenticationMode,
     toggleAuthentication: () -> Unit
 ) {
+    val stateStr = stringResource(
+        if (authenticationMode ==
+            AuthenticationMode.SIGN_IN
+        ) {
+            R.string.action_need_account
+        } else {
+            R.string.action_already_have_account
+        }
+    )
+
     Surface(
         modifier = modifier
-            .padding(top = 16.dp),
+            .padding(top = 16.dp)
+            .testTag(Tags.TAG_AUTHENTICATION_TOGGLE)
+            .semantics { stateDescription = stateStr },
         shadowElevation = 8.dp,
     ) {
         TextButton(
@@ -284,7 +304,7 @@ fun ToggleAuthenticationMode(
             }
         ) {
             Text(
-                text = stringResource(
+                text = stateStr/* stringResource(
                     if (authenticationMode ==
                         AuthenticationMode.SIGN_IN
                     ) {
@@ -292,7 +312,7 @@ fun ToggleAuthenticationMode(
                     } else {
                         R.string.action_already_have_account
                     }
-                )
+                )*/
             )
         }
     }
@@ -307,7 +327,7 @@ fun AuthenticationButton(
     onAuthenticate: () -> Unit
 ) {
     Button(
-        modifier = modifier, onClick = {
+        modifier = modifier.testTag(Tags.TAG_AUTHENTICATE_BUTTON), onClick = {
             onAuthenticate()
         },
         enabled = enabledAuthentication
@@ -398,7 +418,7 @@ fun PasswordInput(
 
     var isPasswordHidden by remember { mutableStateOf(true) }
 
-    TextField(modifier = modifier, keyboardOptions = KeyboardOptions(
+    TextField(modifier = modifier.testTag(TAG_INPUT_PASSWORD), keyboardOptions = KeyboardOptions(
         imeAction = ImeAction.Done, keyboardType = KeyboardType.Password
     ), keyboardActions = KeyboardActions(onDone = {
         onDoneClicked()
@@ -439,7 +459,7 @@ fun EmailInput(
     onEmailChange: (email: String) -> Unit,
     onNextClicked: () -> Unit
 ) {
-    TextField(modifier = modifier, keyboardOptions = KeyboardOptions(
+    TextField(modifier = modifier.testTag(Tags.TAG_INPUT_EMAIL), keyboardOptions = KeyboardOptions(
         imeAction = ImeAction.Next,
         keyboardType = KeyboardType.Email,
     ), keyboardActions = KeyboardActions(onNext = {

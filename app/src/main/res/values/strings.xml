@@ -45,4 +45,7 @@ Already have an account?
     <string name="error_title">Whoops</string>
     <string name="error_action">OK</string>
 
+    <!--HomeScreen-->
+    <string name="cd_create_item">Create a new item</string>
+
 </resources>

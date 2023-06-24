@@ -47,5 +47,7 @@ Already have an account?
 
     <!--HomeScreen-->
     <string name="cd_create_item">Create a new item</string>
+    <string name="cd_more_information">More information</string>
+    <string name="not_available_yet">Not available yet</string>
 
 </resources>

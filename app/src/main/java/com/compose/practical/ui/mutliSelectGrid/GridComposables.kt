@@ -1,22 +1,32 @@
 package com.compose.practical.ui.mutliSelectGrid
 
+import androidx.compose.animation.core.animateDp
+import androidx.compose.animation.core.updateTransition
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.gestures.detectDragGesturesAfterLongPress
 import androidx.compose.foundation.gestures.scrollBy
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyGridState
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.foundation.selection.toggleable
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.RadioButtonUnchecked
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
+import androidx.compose.material3.surfaceColorAtElevation
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
@@ -26,7 +36,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.semantics.onLongClick
@@ -35,6 +47,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.round
 import androidx.compose.ui.unit.toIntRect
+import coil.compose.rememberAsyncImagePainter
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
 
@@ -68,7 +81,7 @@ fun Modifier.photoGridDragHandler(
             }
         },
         onDragCancel = { initialKey = null; autoScrollSpeed.value = 0f },
-        onDragEnd = { initialKey = null ; autoScrollSpeed.value = 0f},
+        onDragEnd = { initialKey = null; autoScrollSpeed.value = 0f },
         onDrag = { change, _ ->
             if (initialKey != null) {
 
@@ -107,8 +120,8 @@ fun LazyGridState.gridItemKeyAtPosition(hitPoint: Offset): Int? =
     }?.key as? Int
 
 @Composable
-private fun PhotoGrid() {
-    val photos by rememberSaveable { mutableStateOf(List(100) { it }) }
+fun PhotoGrid() {
+    val photos by rememberSaveable { mutableStateOf(List(100) { Photo(it, randomSampleImageUrl()) }) }
     val selectedIds = rememberSaveable {
         mutableStateOf(emptySet<Int>())
     }
@@ -134,23 +147,26 @@ private fun PhotoGrid() {
         columns = GridCells.Adaptive(minSize = 128.dp),
         verticalArrangement = Arrangement.spacedBy(3.dp),
         horizontalArrangement = Arrangement.spacedBy(3.dp),
-        modifier = Modifier.photoGridDragHandler(state, selectedIds, autoScrollSpeed = autoScrollSpeed,
-        autoScrollThreshold =  with(LocalDensity.current){ 40.dp.toPx()}
+        modifier = Modifier.photoGridDragHandler(state,
+            selectedIds,
+            autoScrollSpeed = autoScrollSpeed,
+            autoScrollThreshold = with(LocalDensity.current) { 40.dp.toPx() }
         )
     ) {
-        items(photos, key = { it }) { id ->
+        items(photos, key = { it }) { photo ->
 
-            val selected = selectedIds.value.contains(id)
+            val selected by remember { derivedStateOf { selectedIds.value.contains(photo.id) } }
 
 
             ImageItem(
+                photo= photo,
                 selected = selected,
                 inSelectionMode = inSelectionMode,
                 modifier = Modifier
                     .semantics {
                         if (!inSelectionMode) {
                             onLongClick("Select") {
-                                selectedIds.value += id
+                                selectedIds.value += photo.id
                                 true
                             }
                         }
@@ -162,9 +178,9 @@ private fun PhotoGrid() {
                             indication = null, // do not show a ripple
                             onValueChange = {
                                 if (it) {
-                                    selectedIds.value += id
+                                    selectedIds.value += photo.id
                                 } else {
-                                    selectedIds.value -= id
+                                    selectedIds.value -= photo.id
                                 }
                             }
                         )
@@ -179,6 +195,7 @@ private fun PhotoGrid() {
 
 @Composable
 private fun ImageItem(
+    photo: Photo,
     selected: Boolean, inSelectionMode: Boolean, modifier: Modifier
 ) {
 
@@ -188,17 +205,56 @@ private fun ImageItem(
         modifier = modifier.aspectRatio(1f)
     ) {
 
-        if (inSelectionMode) {
-            if (selected) {
-                Icon(imageVector = Icons.Default.CheckCircle, contentDescription = null)
-            } else {
-                Icon(imageVector = Icons.Default.RadioButtonUnchecked, contentDescription = null)
+        Box {
+            val transition = updateTransition(selected, label = "selected")
+            val padding by transition.animateDp(label = "padding") { selected ->
+                if (selected) 10.dp else 0.dp
             }
-        } else {
+            val roundedCornerShape by transition.animateDp(label = "corner") { selected ->
+                if (selected) 16.dp else 0.dp
+            }
 
+            Image(
+                painter = rememberAsyncImagePainter(photo.url),
+                contentDescription = null,
+                modifier = Modifier
+                    .matchParentSize()
+                    .padding(padding)
+                    .clip(RoundedCornerShape(roundedCornerShape))
+            )
+
+
+
+
+            if (inSelectionMode) {
+                if (selected) {
+                    val bgColor = MaterialTheme.colorScheme.surfaceColorAtElevation(3.dp)
+                    Icon(
+                        Icons.Filled.CheckCircle,
+                        tint = MaterialTheme.colorScheme.primary,
+                        contentDescription = null,
+                        modifier = Modifier
+                            .padding(4.dp)
+                            .border(2.dp, bgColor, CircleShape)
+                            .clip(CircleShape)
+                            .background(bgColor)
+                    )
+//                Icon(imageVector = Icons.Default.CheckCircle, contentDescription = null)
+                } else {
+                    Icon(
+                        Icons.Filled.RadioButtonUnchecked,
+                        tint = Color.White.copy(alpha = 0.7f),
+                        contentDescription = null,
+                        modifier = Modifier.padding(6.dp)
+                    )
+                }
+            }
         }
-
 
     }
 
 }
+
+private class Photo(val id: Int, val url: String)
+
+fun randomSampleImageUrl() = "https://picsum.photos/seed/${(0..100000).random()}/256/256"

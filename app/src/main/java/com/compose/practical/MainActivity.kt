@@ -20,6 +20,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.compose.practical.ui.authentication.Authentication
 import com.compose.practical.ui.homeScreen.Home
+import com.compose.practical.ui.mutliSelectGrid.PhotoGrid
 import com.compose.practical.ui.theme.PracticalComposeTheme
 
 class MainActivity : ComponentActivity() {
@@ -29,7 +30,8 @@ class MainActivity : ComponentActivity() {
         setContent {
 //            Authentication()
             MaterialTheme{
-                Home()
+//                Home()
+                PhotoGrid()
             }
 
         }

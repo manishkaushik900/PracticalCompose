@@ -55,6 +55,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.compose.practical.R
 import kotlinx.coroutines.launch
+import java.util.Locale
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -192,7 +193,10 @@ fun HomeContent(
                 MaterialTheme.colorScheme.surfaceTint
             ),
                 title = {
-                    Text(text = "Home")
+                    Text(
+                        text = currentDestination.path.replaceFirstChar { char ->
+                        char.titlecase(Locale.getDefault())
+                    })
                 },
                 navigationIcon = {
                     IconButton(onClick = {
@@ -231,15 +235,19 @@ fun HomeContent(
             )
         },
         bottomBar = {
+            /*val orientation = LocalConfiguration.current.orientation
+            if (orientation != Configuration.ORIENTATION_LANDSCAPE
+                && currentDestination.isRootDestination
+            ) {*/
             BottomNavigationBar(
                 currentDestination = currentDestination,
                 onNavigate = {
                     navController.navigate(it.path) {
                         /* popUpTo(
-                             navController.graph.findStartDestination().id
-                         ) {
-                             saveState = true
-                         }*/
+                         navController.graph.findStartDestination().id
+                     ) {
+                         saveState = true
+                     }*/
                         launchSingleTop = true
                         restoreState = true
 
@@ -249,6 +257,7 @@ fun HomeContent(
                     navController.navigate(Destinations.Creation.path)
                 }
             )
+//            }
         }
 
     ) {
@@ -257,7 +266,6 @@ fun HomeContent(
         )
     }
 }
-
 
 @Composable
 fun ContentArea(

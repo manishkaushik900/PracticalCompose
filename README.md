@@ -34,7 +34,7 @@ To run the Jetpack Compose Playground, make sure you have the following installe
 
 To run the Jetpack Compose Playground on your local machine, follow these steps:
 
-1. Clone the repository: `git clone https://github.com/your/repo.git`
+1. Clone the repository: `git clone https://github.com/manishkaushik900/PracticalCompose.git`
 2. Open the project in Android Studio.
 3. Build and run the app on an emulator or physical device.
 

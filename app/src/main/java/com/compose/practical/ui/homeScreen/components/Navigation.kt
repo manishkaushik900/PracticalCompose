@@ -1,4 +1,4 @@
-package com.compose.practical.ui.homeScreen
+package com.compose.practical.ui.homeScreen.components
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
@@ -7,6 +7,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
+import com.compose.practical.ui.homeScreen.model.Destinations
 
 @Composable
 fun Navigation(

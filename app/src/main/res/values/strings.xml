@@ -50,4 +50,8 @@ Already have an account?
     <string name="cd_more_information">More information</string>
     <string name="not_available_yet">Not available yet</string>
 
+    <string name="label_name">Compose Academy</string>
+    <string name="label_email_drawer">contact@compose.academy</string>
+    <string name="log_out">Logout</string>
+    <string name="cd_open_menu">Open Menu</string>
 </resources>

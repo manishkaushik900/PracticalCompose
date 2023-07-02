@@ -8,7 +8,6 @@ import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.ui.graphics.vector.ImageVector
-import com.compose.practical.ui.homeScreen.model.Destinations.Add.path
 
 sealed class Destinations(
     val path: String,
@@ -32,11 +31,10 @@ sealed class Destinations(
                 else -> Home
             }
         }
+    }
 
-        val title = path.replaceFirstChar {
-            it.uppercase()
-        }
-
+    val title = path.replaceFirstChar {
+        it.uppercase()
     }
 
 

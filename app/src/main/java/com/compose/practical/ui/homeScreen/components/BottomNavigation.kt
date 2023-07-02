@@ -11,8 +11,10 @@ import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import com.compose.practical.R
+import com.compose.practical.ui.homeScreen.Tags.TAG_BOTTOM_NAVIGATION
 import com.compose.practical.ui.homeScreen.model.Destinations
 
 @Composable
@@ -23,7 +25,7 @@ fun BottomNavigationBar(
     onFloatingBtnClick: () -> Unit
 ) {
     BottomAppBar(
-        modifier = modifier,
+        modifier = modifier.testTag(TAG_BOTTOM_NAVIGATION),
         actions = {
             listOf(
                 Destinations.Feed,
@@ -40,7 +42,7 @@ fun BottomNavigationBar(
                         )
                     },
                     onClick = { onNavigate(it) },
-                    label = { Text(text = it.path) })
+                    label = { Text(text = it.title) })
 
             }
 
@@ -51,7 +53,7 @@ fun BottomNavigationBar(
                 containerColor = BottomAppBarDefaults.bottomAppBarFabColor,
                 elevation = FloatingActionButtonDefaults.bottomAppBarFabElevation()
             ) {
-                Icon(Icons.Filled.Add, stringResource(R.string.cd_create_item))
+                Icon(imageVector = Icons.Filled.Add, contentDescription = stringResource(R.string.cd_create_item))
             }
         }
     )

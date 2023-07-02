@@ -22,16 +22,15 @@ import androidx.compose.ui.res.stringResource
 import com.compose.practical.R
 import com.compose.practical.ui.homeScreen.model.Destinations
 import kotlinx.coroutines.launch
-import java.util.Locale
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun RootTopBar(
-    snackbarHostState:SnackbarHostState,
+    snackbarHostState: SnackbarHostState,
     currentDestination: Destinations,
     drawerState: DrawerState
-){
+) {
     val scope = rememberCoroutineScope()
     var clickCount by remember { mutableStateOf(0) }
     val snackbarMessage = stringResource(id = R.string.not_available_yet)
@@ -41,9 +40,11 @@ fun RootTopBar(
     ),
         title = {
             Text(
-                text = currentDestination.path.replaceFirstChar { char ->
-                    char.titlecase(Locale.getDefault())
-                })
+                text = currentDestination.title
+            )
+            /*path.replaceFirstChar { char ->
+                char.titlecase(Locale.getDefault())
+            })*/
         },
         navigationIcon = {
             IconButton(onClick = {

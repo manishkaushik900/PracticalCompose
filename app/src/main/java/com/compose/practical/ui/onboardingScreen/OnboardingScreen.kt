@@ -32,7 +32,9 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.compose.practical.R
+import com.compose.practical.ui.onboardingScreen.Tags.TAG_ONBOARD_SCREEN_IMAGE_VIEW
 import com.compose.practical.ui.onboardingScreen.Tags.TAG_ONBOARD_SCREEN_NAV_BUTTON
+import com.compose.practical.ui.onboardingScreen.Tags.TAG_ONBOARD_TAG_ROW
 
 val onboardPagesList = listOf(
     OnboardPage(
@@ -52,7 +54,9 @@ val onboardPagesList = listOf(
 
 object Tags {
     const val TAG_ONBOARD_SCREEN = "onboard_screen"
+    const val TAG_ONBOARD_SCREEN_IMAGE_VIEW = "onboard_screen_image"
     const val TAG_ONBOARD_SCREEN_NAV_BUTTON = "nav_button"
+    const val TAG_ONBOARD_TAG_ROW = "tag_row"
 }
 
 
@@ -64,14 +68,16 @@ fun OnboardScreen() {
     val currentPage = remember { mutableStateOf(0) }
 
     Column(
-        modifier = Modifier.fillMaxSize().testTag(Tags.TAG_ONBOARD_SCREEN)
+        modifier = Modifier
+            .fillMaxSize()
+            .testTag(Tags.TAG_ONBOARD_SCREEN)
     ) {
 
         OnBoardImageView(
-            modifier = Modifier.testTag(onboardPages[currentPage.value].title)
+            modifier = Modifier
                 .weight(1f)
                 .fillMaxWidth(),
-            imageRes = onboardPages[currentPage.value].imageRes
+            currentPage = onboardPages[currentPage.value]
         )
 
         OnBoardDetails(
@@ -142,8 +148,11 @@ fun OnBoardNavButton(
 
 
 @Composable
-fun OnBoardImageView(modifier: Modifier = Modifier, imageRes: Int) {
-    Box(modifier = modifier) {
+fun OnBoardImageView(modifier: Modifier = Modifier, currentPage: OnboardPage) {
+    val imageRes = currentPage.imageRes
+    Box(modifier = modifier
+        .testTag(TAG_ONBOARD_SCREEN_IMAGE_VIEW+currentPage.title)
+      ) {
         Image(
             painter = painterResource(id = imageRes),
             contentDescription = null,
@@ -174,6 +183,8 @@ fun TabSelector(onboardPages: List<OnboardPage>, currentPage: Int, onTabSelected
         modifier = Modifier
             .fillMaxWidth()
             .background(MaterialTheme.colorScheme.primary)
+            .testTag(TAG_ONBOARD_TAG_ROW)
+
     ) {
         onboardPages.forEachIndexed { index, _ ->
             Tab(selected = index == currentPage, onClick = {
@@ -181,6 +192,7 @@ fun TabSelector(onboardPages: List<OnboardPage>, currentPage: Int, onTabSelected
             }, modifier = Modifier.padding(16.dp), content = {
                 Box(
                     modifier = Modifier
+                        .testTag("$TAG_ONBOARD_TAG_ROW$index")
                         .size(8.dp)
                         .background(
                             color = if (index == currentPage) MaterialTheme.colorScheme.onPrimary

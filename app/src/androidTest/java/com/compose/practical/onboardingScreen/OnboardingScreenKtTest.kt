@@ -52,12 +52,12 @@ class OnboardingScreenKtTest {
         }
 
         composeTestRule.onNodeWithTag(
-            onboardPagesList[0].title
+            Tags.TAG_ONBOARD_SCREEN_IMAGE_VIEW
         ).assertIsDisplayed()
     }
 
     @Test
-    fun asser_ONBOARD_SCREEN_Details_Displayed_Correctly(){
+    fun assert_ONBOARD_SCREEN_Details_Displayed_Correctly(){
         composeTestRule.setContent {
             MaterialTheme{
                 Surface {

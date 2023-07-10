@@ -26,11 +26,13 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.compose.practical.R
+import com.compose.practical.ui.onboardingScreen.Tags.TAG_ONBOARD_SCREEN_NAV_BUTTON
 
 val onboardPagesList = listOf(
     OnboardPage(
@@ -48,6 +50,11 @@ val onboardPagesList = listOf(
     )
 )
 
+object Tags {
+    const val TAG_ONBOARD_SCREEN = "onboard_screen"
+    const val TAG_ONBOARD_SCREEN_NAV_BUTTON = "nav_button"
+}
+
 
 @Composable
 fun OnboardScreen() {
@@ -57,11 +64,11 @@ fun OnboardScreen() {
     val currentPage = remember { mutableStateOf(0) }
 
     Column(
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier.fillMaxSize().testTag(Tags.TAG_ONBOARD_SCREEN)
     ) {
 
         OnBoardImageView(
-            modifier = Modifier
+            modifier = Modifier.testTag(onboardPages[currentPage.value].title)
                 .weight(1f)
                 .fillMaxWidth(),
             imageRes = onboardPages[currentPage.value].imageRes
@@ -127,7 +134,7 @@ fun OnBoardNavButton(
             } else {
                 // Handle onboarding completion
             }
-        }, modifier = modifier
+        }, modifier = modifier.testTag(TAG_ONBOARD_SCREEN_NAV_BUTTON)
     ) {
         Text(text = if (currentPage < noOfPages - 1) "Next" else "Get Started")
     }

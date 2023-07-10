@@ -63,7 +63,7 @@ class BottomNavigationTest {
     }
 
     @Test
-    fun Bottom_Navigatiopn_Displayed(){
+    fun Bottom_Navigatiopn_Create_Button_Displayed(){
         composeTestRule.setContent {
             BottomNavigationBar(currentDestination = Destinations.Feed, onNavigate ={} , onFloatingBtnClick = {})
         }

@@ -1,4 +1,4 @@
-# Jetpack Compose Practical for Real Time Scenerios 
+# Jetpack Compose Practical for Real Time Scenarios 
 
 ## Description
 
@@ -11,6 +11,9 @@ Many Screens are created by learnings from  ## Special Thanks to @Joe Birch for 
 | --------------------- | --------------- | ----------- | ------------------- |
 | ![Authentication Screen](screenshots/authentication.png) | ![Settings Screen](screenshots/settings.png) | ![Home Screen](screenshots/home.png) | ![Multigrid Selection](screenshots/multigrid.png) |
 
+| Onboarding Screen |
+|--------------------------| --------------- | ----------- | ------------------- |
+| ![Onboard Screen](screenshots/onboarding.png) |
 ## Features
 
 The Jetpack Compose Playground includes the following features:
@@ -20,6 +23,7 @@ The Jetpack Compose Playground includes the following features:
 - **Home Screen**: Displays relevant information and actions for the user.
 - **Multigrid Selection**: Utilizes the Android Mad Skill to implement a multi-grid selection feature.
 - **Runtime Permission Handling**: Demonstrates how to handle runtime permissions using Kotlin and Jetpack Compose.
+- **On-Boarding Screen**: Displays On-Boarding process for the user. Made using tabs layout compose.
 - **Material Design 3 Components**: Utilizes the latest Material Design 3 components to create a modern and visually appealing user interface.
 - **UI Test Cases**: Includes UI test cases using Mockito and Espresso to ensure the correctness and reliability of the app's components.
 

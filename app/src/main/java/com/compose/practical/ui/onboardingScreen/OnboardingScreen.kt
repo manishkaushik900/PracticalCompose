@@ -150,9 +150,10 @@ fun OnBoardNavButton(
 @Composable
 fun OnBoardImageView(modifier: Modifier = Modifier, currentPage: OnboardPage) {
     val imageRes = currentPage.imageRes
-    Box(modifier = modifier
-        .testTag(TAG_ONBOARD_SCREEN_IMAGE_VIEW+currentPage.title)
-      ) {
+    Box(
+        modifier = modifier
+            .testTag(TAG_ONBOARD_SCREEN_IMAGE_VIEW + currentPage.title)
+    ) {
         Image(
             painter = painterResource(id = imageRes),
             contentDescription = null,
@@ -205,7 +206,9 @@ fun TabSelector(onboardPages: List<OnboardPage>, currentPage: Int, onTabSelected
 }
 
 data class OnboardPage(
-    val imageRes: Int, val title: String, val description: String
+    val imageRes: Int,
+    val title: String,
+    val description: String
 )
 
 @Preview

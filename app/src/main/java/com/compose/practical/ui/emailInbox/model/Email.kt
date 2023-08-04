@@ -1,4 +1,4 @@
-package com.compose.practical.ui.emailInbox
+package com.compose.practical.ui.emailInbox.model
 
 data class Email(
     val id: String,

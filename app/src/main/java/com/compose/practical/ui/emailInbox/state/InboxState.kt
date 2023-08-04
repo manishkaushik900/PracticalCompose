@@ -1,4 +1,6 @@
-package com.compose.practical.ui.emailInbox
+package com.compose.practical.ui.emailInbox.state
+
+import com.compose.practical.ui.emailInbox.model.Email
 
 enum class InboxStatus {
     LOADING, HAS_EMAILS, ERROR, EMPTY, SUCCESS

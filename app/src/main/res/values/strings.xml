@@ -54,4 +54,14 @@ Already have an account?
     <string name="label_email_drawer">contact@compose.academy</string>
     <string name="log_out">Logout</string>
     <string name="cd_open_menu">Open Menu</string>
+    <string name="title_inbox">Inbox (%s)</string>
+    <string name="message_content_error">
+Whoops, there was a problem loading the content.
+</string>
+    <string name="label_try_again">Try again?</string>
+
+    <string name="message_empty_content">
+Nothing to show here yet.
+</string>
+    <string name="label_check_again">Check again</string>
 </resources>

@@ -1,6 +1,9 @@
 package com.compose.practical.ui.emailInbox
 
 import androidx.lifecycle.ViewModel
+import com.compose.practical.ui.emailInbox.model.EmailFactory
+import com.compose.practical.ui.emailInbox.state.InboxState
+import com.compose.practical.ui.emailInbox.state.InboxStatus
 import kotlinx.coroutines.flow.MutableStateFlow
 
 class InboxViewModel : ViewModel() {

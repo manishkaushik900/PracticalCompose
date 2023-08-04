@@ -1,4 +1,6 @@
-package com.compose.practical.ui.emailInbox
+package com.compose.practical.ui.emailInbox.model
+
+import com.compose.practical.ui.emailInbox.model.Email
 
 object EmailFactory {
     fun makeEmailList(): List<Email> {

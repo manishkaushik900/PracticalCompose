@@ -64,4 +64,5 @@ Whoops, there was a problem loading the content.
 Nothing to show here yet.
 </string>
     <string name="label_check_again">Check again</string>
+    <string name="cd_delete_email">Delete Email</string>
 </resources>

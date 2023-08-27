@@ -82,7 +82,6 @@ fun EmailInbox(
     inboxEventListener: (event: InboxEvent) -> Unit
 
 ) {
-//this is manish
     Scaffold(modifier = modifier,
         topBar = {
             TopAppBar(
@@ -100,7 +99,7 @@ fun EmailInbox(
         }
     ) {
 
-        Box(
+        /*Box(
             modifier = Modifier
                 .padding(it)
                 .fillMaxSize(),
@@ -120,7 +119,7 @@ fun EmailInbox(
                     inboxEventListener(InboxEvent.RefreshContent)
                 }
             }
-        }
+        }*/
 
     }
 

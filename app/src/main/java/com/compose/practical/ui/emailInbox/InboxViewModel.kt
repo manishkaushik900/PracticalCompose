@@ -38,6 +38,10 @@ class InboxViewModel : ViewModel() {
             is InboxEvent.DeleteEmail -> {
                 deleteEmail(inboxEvent.id)
             }
+
+            is InboxEvent.NewEmail -> {
+                loadContent()
+            }
         }
     }
 }
@@ -45,5 +49,7 @@ class InboxViewModel : ViewModel() {
 sealed class InboxEvent {
     object RefreshContent : InboxEvent()
     class DeleteEmail(val id: String) : InboxEvent()
+
+    class NewEmail(val id: String) : InboxEvent()
 
 }
